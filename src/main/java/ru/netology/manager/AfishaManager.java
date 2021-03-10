@@ -17,6 +17,23 @@ public class AfishaManager {
         this.moviesFeed = moviesFeed;
     }
 
+
+    // наивная реализация
+    public void removeById(int id) {
+        int length = items.length - 1;
+        MovieItem[] tmp = new MovieItem[length];
+        int index = 0;
+        for (MovieItem item : items) {
+            if (item.getId() != id) {
+                tmp[index] = item;
+                index++;
+            }
+        }
+        // меняем наши элементы
+        items = tmp;
+    }
+
+
     public void add(MovieItem item) {
         // создаём новый массив размером на единицу больше
         int length = items.length + 1;
@@ -44,18 +61,15 @@ public class AfishaManager {
         return result;
     }
 
-    // наивная реализация
-    public void removeById(int id) {
-        int length = items.length - 1;
-        MovieItem[] tmp = new MovieItem[length];
-        int index = 0;
-        for (MovieItem item : items) {
-            if (item.getId() != id) {
-                tmp[index] = item;
-                index++;
-            }
+    public MovieItem[] getMoviesForFeed() {
+        int feed = this.moviesFeed;
+        if (feed > items.length)
+            feed = items.length;
+        MovieItem[] result = new MovieItem[feed];
+        for (int i = 0; i < result.length; i++) {
+            int index = items.length - i - 1;
+            result[i] = items[index];
         }
-        // меняем наши элементы
-        items = tmp;
+        return result;
     }
 }
